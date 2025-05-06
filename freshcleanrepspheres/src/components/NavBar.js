@@ -17,10 +17,27 @@ import AppsIcon from '@mui/icons-material/Apps';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
 
 const navLinks = [
-  { label: 'Market Insights', href: '/blog.html', emphasize: false, icon: <InsightsIcon sx={{ mr: 1, fontSize: 22 }} /> },
+  { label: 'Market Insights', href: '/blog.html', emphasize: false, icon: <InsightsIcon sx={{ mr: 1, fontSize: 22 }} />, fire: true },
   { label: 'Sphere OS', href: '/workspace.html', emphasize: false, icon: <AppsIcon sx={{ mr: 1, fontSize: 22 }} /> },
   { label: 'Podcast', href: '/podcast.html', emphasize: true, icon: <PodcastsIcon sx={{ mr: 1, fontSize: 22 }} /> },
 ];
+
+// Animated fire underline keyframes
+const fireUnderlineAnim = {
+  '@keyframes fireUnderline': {
+    '0%': { backgroundPosition: '0% 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+    '100%': { backgroundPosition: '0% 50%' },
+  }
+};
+// Animated icon glow keyframes
+const fireIconPulse = {
+  '@keyframes fireIconPulse': {
+    '0%': { filter: 'drop-shadow(0 0 0px #ffb347)' },
+    '50%': { filter: 'drop-shadow(0 0 8px #ff7e5f)' },
+    '100%': { filter: 'drop-shadow(0 0 0px #ffb347)' },
+  }
+};
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -169,26 +186,78 @@ export default function NavBar() {
                     minWidth: 0,
                     px: 2.2,
                     mx: 0.5,
+                    background: 'transparent',
+                    boxShadow: link.fire ? '0 0 16px 0 #ffb34755' : 'none',
+                    position: 'relative',
+                    zIndex: 2,
+                    ...(link.fire ? fireUnderlineAnim : {}),
+                    '&:hover': link.fire ? {
+                      filter: 'brightness(1.12)',
+                    } : {},
                   }}
                   disableRipple
                 >
-                  {link.icon}
+                  {link.fire ? (
+                    <span
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        animation: 'fireIconPulse 2.2s infinite',
+                        ...fireIconPulse['@keyframes fireIconPulse']['0%'],
+                      }}
+                    >
+                      {React.cloneElement(link.icon, {
+                        sx: {
+                          mr: 1,
+                          fontSize: 22,
+                          color: '#fff',
+                          filter: 'drop-shadow(0 0 6px #ffb347cc)',
+                          transition: 'filter 0.3s',
+                        },
+                      })}
+                    </span>
+                  ) : link.icon}
                   {link.label}
-                  <Box
-                    className="nav-underline"
-                    sx={{
-                      position: 'absolute',
-                      left: '10%',
-                      bottom: 6,
-                      height: 3,
-                      width: 0,
-                      borderRadius: 2,
-                      opacity: 0,
-                      background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
-                      transition: 'width 0.32s cubic-bezier(.8,.2,.2,1), opacity 0.22s',
-                      zIndex: 1,
-                    }}
-                  />
+                  {/* Animated fire underline */}
+                  {link.fire && (
+                    <Box
+                      sx={{
+                        content: '""',
+                        position: 'absolute',
+                        left: '15%',
+                        right: '15%',
+                        bottom: 2,
+                        height: 6,
+                        borderRadius: 3,
+                        background: 'linear-gradient(90deg, #ffb347, #ff7e5f, #ffb347, #ff7e5f)',
+                        backgroundSize: '300% 300%',
+                        animation: 'fireUnderline 2.8s linear infinite',
+                        filter: 'blur(2.5px) brightness(1.2)',
+                        opacity: 0.88,
+                        zIndex: 0,
+                        transition: 'all 0.35s cubic-bezier(.8,.2,.2,1)',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  )}
+                  {/* Subtle underline for other nav items */}
+                  {!link.fire && (
+                    <Box
+                      className="nav-underline"
+                      sx={{
+                        position: 'absolute',
+                        left: '10%',
+                        bottom: 6,
+                        height: 3,
+                        width: 0,
+                        borderRadius: 2,
+                        opacity: 0,
+                        background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
+                        transition: 'width 0.32s cubic-bezier(.8,.2,.2,1), opacity 0.22s',
+                        zIndex: 1,
+                      }}
+                    />
+                  )}
                 </Button>
               </Box>
             ))}
