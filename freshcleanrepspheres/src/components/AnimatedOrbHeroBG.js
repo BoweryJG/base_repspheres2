@@ -232,7 +232,7 @@ const AnimatedOrbHeroBG = ({
       svg.removeEventListener('click', handleClick);
     };
 
-  }, [width, height]);
+  }, []); // Removed undefined width/height from dependencies
 
   // Responsive, absolutely positioned in upper right
   return (
