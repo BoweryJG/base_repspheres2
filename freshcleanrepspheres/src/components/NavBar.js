@@ -1,7 +1,6 @@
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,11 +12,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import InsightsIcon from '@mui/icons-material/Insights';
+import AppsIcon from '@mui/icons-material/Apps';
+import PodcastsIcon from '@mui/icons-material/Podcasts';
 
 const navLinks = [
-  { label: 'Market Insights', href: '/blog.html', emphasize: false },
-  { label: 'Sphere OS', href: '/workspace.html', emphasize: false },
-  { label: 'Podcast', href: '/podcast.html', emphasize: true },
+  { label: 'Market Insights', href: '/blog.html', emphasize: false, icon: <InsightsIcon sx={{ mr: 1, fontSize: 22 }} /> },
+  { label: 'Sphere OS', href: '/workspace.html', emphasize: false, icon: <AppsIcon sx={{ mr: 1, fontSize: 22 }} /> },
+  { label: 'Podcast', href: '/podcast.html', emphasize: true, icon: <PodcastsIcon sx={{ mr: 1, fontSize: 22 }} /> },
 ];
 
 export default function NavBar() {
@@ -59,15 +61,16 @@ export default function NavBar() {
       position="fixed"
       elevation={0}
       sx={{
-        background: 'rgba(20,14,38,0.82)',
-        backdropFilter: 'blur(12px)',
+        background: 'rgba(20,14,38,0.74)',
+        backdropFilter: 'blur(18px) saturate(180%)',
         borderBottom: '2.5px solid',
         borderImage: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%) 1',
         boxShadow: '0 4px 32px 0 rgba(123,66,246,0.10)',
-        zIndex: 1301
+        zIndex: 1301,
+        minHeight: { xs: 56, md: 64 },
       }}
     >
-      <Toolbar sx={{ justifyContent: 'space-between', minHeight: { xs: 64, md: 80 } }}>
+      <Toolbar sx={{ justifyContent: 'space-between', minHeight: { xs: 56, md: 64 }, px: { xs: 2, md: 4 } }}>
         <Box sx={{ display: 'flex', alignItems: 'center', fontWeight: 900, fontSize: '1.7rem', letterSpacing: '0.02em', color: '#fff' }}>
           {orb}
           RepSpheres
@@ -86,20 +89,43 @@ export default function NavBar() {
                   background: 'rgba(20,14,38,0.96)',
                   borderLeft: '2.5px solid',
                   borderImage: 'linear-gradient(180deg, #7B42F6 0%, #00ffc6 100%) 1',
-                  minWidth: 240
+                  minWidth: 260,
+                  borderTopLeftRadius: 26,
+                  borderBottomLeftRadius: 26,
+                  boxShadow: '0 8px 48px 4px #7B42F633',
+                  p: 1,
                 }
               }}
             >
               <List sx={{ mt: 4 }}>
                 {navLinks.map((link) => (
                   <ListItem key={link.label} disablePadding>
-                    <ListItemButton component="a" href={link.href} sx={{ ...navButtonStyle, opacity: link.emphasize ? 0.6 : 1 }}>
+                    <ListItemButton
+                      component="a"
+                      href={link.href}
+                      sx={{
+                        ...navButtonStyle,
+                        opacity: link.emphasize ? 0.6 : 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '1.09rem',
+                        mb: 1,
+                        color: '#fff',
+                      }}
+                    >
+                      {link.icon}
                       <ListItemText primary={link.label} />
                     </ListItemButton>
                   </ListItem>
                 ))}
                 <ListItem disablePadding>
-                  <ListItemButton component="a" href="/login.html" sx={{ ...navButtonStyle, border: '1.5px solid #fff', color: '#fff', mt: 2 }}>
+                  <ListItemButton component="a" href="/login.html" sx={{
+                    ...navButtonStyle,
+                    border: '1.5px solid #fff',
+                    color: '#fff',
+                    mt: 2,
+                    mb: 1,
+                  }}>
                     <ListItemText primary="Log In" />
                   </ListItemButton>
                 </ListItem>
@@ -112,6 +138,7 @@ export default function NavBar() {
                     boxShadow: '0 4px 20px rgba(123,66,246,0.20)',
                     fontWeight: 800,
                     fontSize: '1.15rem',
+                    borderRadius: '32px',
                     '&:hover': {
                       background: 'linear-gradient(135deg, #5B3CFF 0%, #00ffc6 100%)',
                       color: '#fff',
@@ -125,23 +152,45 @@ export default function NavBar() {
             </Drawer>
           </>
         ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
             {navLinks.map((link) => (
-              <Button
-                key={link.label}
-                href={link.href}
-                sx={{
-                  ...navButtonStyle,
-                  opacity: link.emphasize ? 0.6 : 1,
-                  color: '#fff',
-                  fontWeight: link.emphasize ? 600 : 700,
-                  fontSize: link.emphasize ? '1rem' : '1.08rem',
-                  textTransform: 'none',
-                  letterSpacing: '0.01em',
-                }}
-              >
-                {link.label}
-              </Button>
+              <Box key={link.label} sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <Button
+                  href={link.href}
+                  sx={{
+                    ...navButtonStyle,
+                    opacity: link.emphasize ? 0.6 : 1,
+                    color: '#fff',
+                    fontWeight: link.emphasize ? 600 : 700,
+                    fontSize: link.emphasize ? '1rem' : '1.08rem',
+                    letterSpacing: '0.01em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    minWidth: 0,
+                    px: 2.2,
+                    mx: 0.5,
+                  }}
+                  disableRipple
+                >
+                  {link.icon}
+                  {link.label}
+                  <Box
+                    className="nav-underline"
+                    sx={{
+                      position: 'absolute',
+                      left: '10%',
+                      bottom: 6,
+                      height: 3,
+                      width: 0,
+                      borderRadius: 2,
+                      opacity: 0,
+                      background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
+                      transition: 'width 0.32s cubic-bezier(.8,.2,.2,1), opacity 0.22s',
+                      zIndex: 1,
+                    }}
+                  />
+                </Button>
+              </Box>
             ))}
             <Button
               href="/login.html"
@@ -152,7 +201,9 @@ export default function NavBar() {
                 color: '#fff',
                 ml: 2,
                 fontWeight: 700,
-                background: 'rgba(123,66,246,0.05)',
+                background: 'rgba(123,66,246,0.07)',
+                borderRadius: '32px',
+                px: 3,
                 '&:hover': {
                   background: 'rgba(123,66,246,0.18)',
                   borderColor: 'var(--secondary)',
@@ -173,6 +224,7 @@ export default function NavBar() {
                 fontWeight: 900,
                 fontSize: '1.13rem',
                 px: 4,
+                borderRadius: '32px',
                 boxShadow: '0 4px 20px rgba(123,66,246,0.18)',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #5B3CFF 0%, #00ffc6 100%)',
