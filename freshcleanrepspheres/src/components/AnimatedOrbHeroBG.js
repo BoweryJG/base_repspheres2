@@ -18,6 +18,7 @@ const AnimatedOrbHeroBG = ({
   const svgRef = useRef();
 
   useEffect(() => {
+    console.log('AnimatedOrbHeroBG mounted');
     // ---- Orb Animation Logic (from HTML, adapted for React) ----
     const svg = svgRef.current;
     if (!svg) return;
@@ -255,6 +256,7 @@ const AnimatedOrbHeroBG = ({
         viewBox={`0 0 ${width} ${height}`}
         id="orbSVG"
       >
+        <circle cx="10" cy="10" r="10" fill="yellow" />
         <g id="particles"></g>
         <defs>
           <radialGradient id="parentGrad" cx="50%" cy="50%" r="70%">
