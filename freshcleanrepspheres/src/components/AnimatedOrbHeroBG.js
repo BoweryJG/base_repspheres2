@@ -23,7 +23,6 @@ const AnimatedOrbHeroBG = ({
     if (!svg) return;
 
     // --- Utility functions ---
-    function lerp(a, b, t) { return a + (b - a) * t; }
     function hslToHex(h, s, l) {
       h /= 360; s /= 100; l /= 100;
       let r, g, b;
@@ -44,15 +43,6 @@ const AnimatedOrbHeroBG = ({
         b = hue2rgb(p, q, h - 1/3);
       }
       return "#" + [r, g, b].map(x => Math.round(x * 255).toString(16).padStart(2, "0")).join("");
-    }
-    function lerpColor(a, b, t) {
-      const ah = parseInt(a.replace('#', ''), 16), bh = parseInt(b.replace('#', ''), 16);
-      const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
-      const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
-      const rr = Math.round(ar + (br - ar) * t);
-      const rg = Math.round(ag + (bg - ag) * t);
-      const rb = Math.round(ab + (bb - ab) * t);
-      return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1);
     }
     function generateSuperSmoothBlob(cx, cy, r, points, t, amp=1, phase=0) {
       const pts = [];
@@ -119,8 +109,7 @@ const AnimatedOrbHeroBG = ({
     const parentOrb = svg.querySelector('#parentOrb');
     const childrenGroup = svg.querySelector('#children');
     // Particle system
-    let particles = [];
-    const particlesGroup = svg.querySelector('#particles');
+
 
     // --- Animation helpers ---
     function approach(current, target, speed) { return current + (target - current) * speed; }
@@ -133,15 +122,7 @@ const AnimatedOrbHeroBG = ({
     }
 
     // --- Proximity interaction ---
-    function getPointerDistanceToOrb(x, y) {
-      // Distance to center of parent orb
-      const bbox = svg.getBoundingClientRect();
-      const cx = bbox.right - bbox.width / 3;
-      const cy = bbox.top + bbox.height / 3;
-      const dx = x - cx;
-      const dy = y - cy;
-      return Math.sqrt(dx * dx + dy * dy);
-    }
+
 
     // --- Haptics ---
     function triggerHaptic() {
@@ -212,8 +193,6 @@ const AnimatedOrbHeroBG = ({
       childrenGroup.innerHTML = '';
       for (let i = 0; i < childCount; i++) {
         const state = orbStates[i + 1];
-        const fam = ["#fff", "#fff"];
-        const tcol = 0.5 + 0.5 * Math.sin(now * 0.0005 + i);
         // Animate dynamic color family for each orb
         // (Optionally, you can use the original getDynamicColorFamily here)
         // Animate orbit
