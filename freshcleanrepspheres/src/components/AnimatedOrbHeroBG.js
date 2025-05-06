@@ -183,9 +183,8 @@ const AnimatedOrbHeroBG = ({
         state.dragTarget = approach(state.dragTarget, 0, 0.018 + orbMorphSpeeds[i] * 0.6);
       }
       // --- Parent orb ---
-      const bbox = svg.getBoundingClientRect();
-      const px = bbox.right - bbox.width / 3;
-      const py = bbox.top + bbox.height / 3;
+      const px = width * 2 / 3;
+      const py = height / 3;
       const parentR = parentRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * 18 : 0);
       const parentAmp = 1 + (pulse > 0 ? Math.sin(pulse * Math.PI) * 0.3 : 0);
       const parentPath = generateSuperSmoothBlob(px, py, parentR, 64, now * 0.0004, parentAmp);
