@@ -226,7 +226,7 @@ const AnimatedOrbHeroBG = ({
       svg.removeEventListener('click', handleClick);
     };
 
-  }, []);
+  }, [width, height]);
 
   // Responsive, absolutely positioned in upper right
   return (
