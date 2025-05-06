@@ -20,7 +20,7 @@ export default function HeroSection() {
         overflow: 'hidden',
       }}
     >
-      <AnimatedOrbHeroBG width={600} height={600} zIndex={0} style={{pointerEvents:'none'}} />
+      <AnimatedOrbHeroBG width={600} height={600} zIndex={2} />
       <Container maxWidth="md">
         <Typography
           variant="h1"
