@@ -10,6 +10,7 @@ import MarketInsights from './components/MarketInsights';
 import Podcasts from './components/Podcasts';
 import MoatSection from './components/MoatSection';
 import CTASection from './components/CTASection';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <CTASection />
       <MarketInsights />
       <Podcasts />
+      <Footer />
       {/* Add more sections/components as needed */}
     </>
   );
