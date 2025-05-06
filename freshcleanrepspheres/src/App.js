@@ -9,6 +9,7 @@ import DeploymentSection from './components/DeploymentSection';
 import MarketInsights from './components/MarketInsights';
 import Podcasts from './components/Podcasts';
 import MoatSection from './components/MoatSection';
+import CTASection from './components/CTASection';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <TimelineSection />
       <DeploymentSection />
       <MoatSection />
+      <CTASection />
       <MarketInsights />
       <Podcasts />
       {/* Add more sections/components as needed */}
