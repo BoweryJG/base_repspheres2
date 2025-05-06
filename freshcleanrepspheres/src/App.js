@@ -8,6 +8,7 @@ import TimelineSection from './components/TimelineSection';
 import DeploymentSection from './components/DeploymentSection';
 import MarketInsights from './components/MarketInsights';
 import Podcasts from './components/Podcasts';
+import MoatSection from './components/MoatSection';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <SolutionSection />
       <TimelineSection />
       <DeploymentSection />
+      <MoatSection />
       <MarketInsights />
       <Podcasts />
       {/* Add more sections/components as needed */}
