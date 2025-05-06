@@ -224,7 +224,6 @@ const AnimatedOrbHeroBG = ({
       svg.removeEventListener('touchmove', handlePointerMove);
       svg.removeEventListener('touchend', handlePointerLeave);
       svg.removeEventListener('click', handleClick);
-    };
 
   }, []);
 
@@ -239,6 +238,7 @@ const AnimatedOrbHeroBG = ({
         height,
         pointerEvents: "auto", // allow interaction
         zIndex,
+        border: '2px solid red', // DEBUG: red border to confirm rendering
         ...style,
         '@media (max-width: 600px)': {
           width: width * 0.6,
@@ -247,6 +247,7 @@ const AnimatedOrbHeroBG = ({
       }}
       className={className}
     >
+      <div style={{position:'absolute',top:0,left:0,color:'red',fontWeight:'bold',background:'white',zIndex:10,fontSize:18}}>ORB DEBUG</div>
       <svg
         ref={svgRef}
         width={width}
