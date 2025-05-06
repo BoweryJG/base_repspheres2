@@ -18,14 +18,20 @@ const AnimatedOrbHeroBG = ({
   const svgRef = useRef();
   const isMobile = useMediaQuery("(max-width:600px)");
 
-  // Responsive orb sizing
-  const orbBoxSize = isMobile ? 140 : 320;
-  const orbBoxTop = isMobile ? 72 : 24;
-  const orbBoxRight = isMobile ? 8 : 24;
-  const parentRadius = isMobile ? 36 : 78;
-  const childRadius = isMobile ? 11 : 24;
-  const childOrbitBase = isMobile ? 22 : 48;
-  const childOrbitStep = isMobile ? 14 : 26;
+  // Responsive orb sizing with extra space for child orbs
+  const orbBoxSize = isMobile ? 200 : 420; // Increased to prevent clipping
+  const orbBoxTop = isMobile ? 120 : 40; // Moved down on mobile to separate from title
+  const orbBoxRight = isMobile ? 0 : 20; // Adjusted for better positioning
+  
+  // Center the orb within the SVG viewBox for better animation containment
+  const centerX = orbBoxSize / 2;
+  const centerY = orbBoxSize / 2;
+  
+  // Reduced radii to ensure everything fits in the viewBox
+  const parentRadius = isMobile ? 32 : 70;
+  const childRadius = isMobile ? 10 : 22;
+  const childOrbitBase = isMobile ? 20 : 42;
+  const childOrbitStep = isMobile ? 12 : 22;
   const childCount = 5;
   const childPoints = 48;
   const childAmp = 0.5;
@@ -190,9 +196,10 @@ const AnimatedOrbHeroBG = ({
         state.dragTarget = approach(state.dragTarget, 0, 0.018 + orbMorphSpeeds[i] * 0.6);
       }
       // --- Parent orb ---
-      const px = orbBoxSize * 0.68;
-      const py = orbBoxSize * 0.38;
-      const parentR = parentRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * (isMobile ? 7 : 14) : 0);
+      // Center the parent orb in the SVG for better containment
+      const px = centerX;
+      const py = centerY;
+      const parentR = parentRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * (isMobile ? 5 : 10) : 0);
       const parentAmp = 1 + (pulse > 0 ? Math.sin(pulse * Math.PI) * 0.3 : 0);
       const parentPath = generateSuperSmoothBlob(px, py, parentR, 64, now * 0.0004, parentAmp);
       parentOrb.setAttribute('d', parentPath);
@@ -248,6 +255,7 @@ const AnimatedOrbHeroBG = ({
         zIndex,
         opacity: visible ? 1 : 0,
         transition: "opacity 0.6s cubic-bezier(0.4,0,0.2,1)",
+        overflow: "visible", // Allow SVG to overflow its container
         ...style,
       }}
       className={className}
@@ -256,7 +264,7 @@ const AnimatedOrbHeroBG = ({
         ref={svgRef}
         width={orbBoxSize}
         height={orbBoxSize}
-        style={{ display: "block", background: "none" }}
+        style={{ display: "block", background: "none", overflow: "visible" }}
         viewBox={`0 0 ${orbBoxSize} ${orbBoxSize}`}
         id="orbSVG"
       >
