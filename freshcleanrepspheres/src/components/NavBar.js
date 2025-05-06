@@ -179,7 +179,7 @@ export default function NavBar() {
                     px: 2.2,
                     mx: 0.5,
                     background: 'transparent',
-                    boxShadow: link.fire ? '0 0 16px 0 #ffb34755' : 'none',
+                    boxShadow: 'none',
                     position: 'relative',
                     zIndex: 2,
                     ...(link.fire ? fireUnderlineAnim : {}),
