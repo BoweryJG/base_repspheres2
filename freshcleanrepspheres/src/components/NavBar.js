@@ -30,14 +30,7 @@ const fireUnderlineAnim = {
     '100%': { backgroundPosition: '0% 50%' },
   }
 };
-// Animated icon glow keyframes
-const fireIconPulse = {
-  '@keyframes fireIconPulse': {
-    '0%': { filter: 'drop-shadow(0 0 0px #ffb347)' },
-    '50%': { filter: 'drop-shadow(0 0 8px #ff7e5f)' },
-    '100%': { filter: 'drop-shadow(0 0 0px #ffb347)' },
-  }
-};
+
 
 export default function NavBar() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
