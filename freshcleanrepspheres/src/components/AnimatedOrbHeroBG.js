@@ -192,7 +192,6 @@ const AnimatedOrbHeroBG = ({
       // --- Children ---
       childrenGroup.innerHTML = '';
       for (let i = 0; i < childCount; i++) {
-        const state = orbStates[i + 1];
         // Animate dynamic color family for each orb
         // (Optionally, you can use the original getDynamicColorFamily here)
         // Animate orbit
