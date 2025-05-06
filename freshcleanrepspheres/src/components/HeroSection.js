@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
+import AnimatedOrbHeroBG from './AnimatedOrbHeroBG';
 
 export default function HeroSection() {
   return (
@@ -16,8 +17,10 @@ export default function HeroSection() {
         background: 'transparent', // Let StarryBackground show through
         pt: { xs: 10, md: 16 },
         pb: { xs: 8, md: 14 },
+        overflow: 'hidden',
       }}
     >
+      <AnimatedOrbHeroBG width={600} height={600} zIndex={0} style={{pointerEvents:'none'}} />
       <Container maxWidth="md">
         <Typography
           variant="h1"
