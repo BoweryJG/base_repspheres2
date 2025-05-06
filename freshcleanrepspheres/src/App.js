@@ -6,8 +6,7 @@ import ProblemSection from './components/ProblemSection';
 import SolutionSection from './components/SolutionSection';
 import TimelineSection from './components/TimelineSection';
 import DeploymentSection from './components/DeploymentSection';
-import MarketInsights from './components/MarketInsights';
-import Podcasts from './components/Podcasts';
+
 import MoatSection from './components/MoatSection';
 import CTASection from './components/CTASection';
 import Footer from './components/Footer';
@@ -24,8 +23,6 @@ function App() {
       <DeploymentSection />
       <MoatSection />
       <CTASection />
-      <MarketInsights />
-      <Podcasts />
       <Footer />
       {/* Add more sections/components as needed */}
     </>
