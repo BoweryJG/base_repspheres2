@@ -224,6 +224,7 @@ const AnimatedOrbHeroBG = ({
       svg.removeEventListener('touchmove', handlePointerMove);
       svg.removeEventListener('touchend', handlePointerLeave);
       svg.removeEventListener('click', handleClick);
+    }; // added semicolon here
 
   }, []);
 
