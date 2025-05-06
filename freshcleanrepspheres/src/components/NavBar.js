@@ -191,9 +191,6 @@ export default function NavBar() {
                     position: 'relative',
                     zIndex: 2,
                     ...(link.fire ? fireUnderlineAnim : {}),
-                    '&:hover': link.fire ? {
-                      filter: 'brightness(1.12)',
-                    } : {},
                   }}
                   disableRipple
                 >
@@ -211,53 +208,29 @@ export default function NavBar() {
                           mr: 1,
                           fontSize: 22,
                           color: '#fff',
-                          filter: 'drop-shadow(0 0 6px #ffb347cc)',
+                          filter: 'drop-shadow(0 0 8px #ffb347cc) drop-shadow(0 0 16px #ff7e5f66)',
                           transition: 'filter 0.3s',
                         },
                       })}
                     </span>
                   ) : link.icon}
                   {link.label}
-                  {/* Animated fire underline */}
-                  {link.fire && (
-                    <Box
-                      sx={{
-                        content: '""',
-                        position: 'absolute',
-                        left: '15%',
-                        right: '15%',
-                        bottom: 2,
-                        height: 6,
-                        borderRadius: 3,
-                        background: 'linear-gradient(90deg, #ffb347, #ff7e5f, #ffb347, #ff7e5f)',
-                        backgroundSize: '300% 300%',
-                        animation: 'fireUnderline 2.8s linear infinite',
-                        filter: 'blur(2.5px) brightness(1.2)',
-                        opacity: 0.88,
-                        zIndex: 0,
-                        transition: 'all 0.35s cubic-bezier(.8,.2,.2,1)',
-                        pointerEvents: 'none',
-                      }}
-                    />
-                  )}
-                  {/* Subtle underline for other nav items */}
-                  {!link.fire && (
-                    <Box
-                      className="nav-underline"
-                      sx={{
-                        position: 'absolute',
-                        left: '10%',
-                        bottom: 6,
-                        height: 3,
-                        width: 0,
-                        borderRadius: 2,
-                        opacity: 0,
-                        background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
-                        transition: 'width 0.32s cubic-bezier(.8,.2,.2,1), opacity 0.22s',
-                        zIndex: 1,
-                      }}
-                    />
-                  )}
+                  {/* Subtle underline for all nav items */}
+                  <Box
+                    className="nav-underline"
+                    sx={{
+                      position: 'absolute',
+                      left: '10%',
+                      bottom: 6,
+                      height: 3,
+                      width: 0,
+                      borderRadius: 2,
+                      opacity: 0,
+                      background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
+                      transition: 'width 0.32s cubic-bezier(.8,.2,.2,1), opacity 0.22s',
+                      zIndex: 1,
+                    }}
+                  />
                 </Button>
               </Box>
             ))}
