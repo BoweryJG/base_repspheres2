@@ -1,35 +1,53 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Box, Typography, Container, Button } from '@mui/material';
 import AnimatedOrbHeroBG from './AnimatedOrbHeroBG';
 
 export default function HeroSection() {
+  const heroRef = useRef();
+  const [showOrb, setShowOrb] = useState(true);
+
+  useEffect(() => {
+    const obs = new window.IntersectionObserver(
+      ([entry]) => setShowOrb(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    if (heroRef.current) obs.observe(heroRef.current);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <Box
+      ref={heroRef}
       sx={{
         position: 'relative',
-        minHeight: '85vh',
+        minHeight: { xs: '90vh', md: '90vh' },
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
         textAlign: 'center',
         zIndex: 1,
-        background: 'transparent', // Let StarryBackground show through
-        pt: { xs: 10, md: 16 },
+        background: 'transparent',
+        pt: { xs: 14, md: 22 },
         pb: { xs: 8, md: 14 },
         overflow: 'hidden',
       }}
     >
-      <AnimatedOrbHeroBG width={600} height={600} zIndex={2} />
+      <AnimatedOrbHeroBG
+        width={480}
+        height={480}
+        zIndex={2}
+        visible={showOrb}
+      />
       <Container maxWidth="md">
         <Typography
           variant="h1"
           sx={{
             fontWeight: 900,
-            fontSize: { xs: '2.5rem', md: '3.5rem' },
-            mb: 2,
+            fontSize: { xs: '2.8rem', md: '4.1rem' },
+            mb: 2.5,
             letterSpacing: '-0.04em',
-            lineHeight: 1.1,
+            lineHeight: 1.09,
             background: 'linear-gradient(90deg, #fff 60%, #00ffc6 80%, #7B42F6 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -42,11 +60,11 @@ export default function HeroSection() {
           variant="h6"
           sx={{
             color: 'rgba(255,255,255,0.85)',
-            mb: 4,
+            mb: 5,
             maxWidth: 600,
             mx: 'auto',
             fontWeight: 400,
-            fontSize: { xs: '1.1rem', md: '1.25rem' },
+            fontSize: { xs: '1.18rem', md: '1.33rem' },
           }}
         >
           Give your team the unfair advantage of AI-driven psychology—decode what makes buyers say "yes," eliminate guesswork, and engineer success at every stage of the sales journey.
@@ -56,10 +74,10 @@ export default function HeroSection() {
           size="large"
           href="#schedule"
           sx={{
-            px: 5,
-            py: 1.7,
+            px: 6,
+            py: 2.1,
             fontWeight: 700,
-            fontSize: '1.1rem',
+            fontSize: { xs: '1.13rem', md: '1.22rem' },
             borderRadius: '30px',
             background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
             boxShadow: '0 4px 24px rgba(123,66,246,0.18)',

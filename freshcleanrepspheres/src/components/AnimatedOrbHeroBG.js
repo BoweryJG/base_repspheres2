@@ -8,12 +8,14 @@ import Box from "@mui/material/Box";
  * - Adds interactivity: proximity color/motion, click pulse, haptics
  */
 const AnimatedOrbHeroBG = ({
-  width = 600,
-  height = 600,
+  width = 480,
+  height = 480,
   style = {},
   className = "",
   zIndex = 0,
   onClick,
+  visible = true, // NEW prop
+
 }) => {
   const svgRef = useRef();
 
@@ -233,17 +235,15 @@ const AnimatedOrbHeroBG = ({
     <Box
       sx={{
         position: "absolute",
-        top: 0,
-        right: 0,
-        width,
-        height,
-        pointerEvents: "auto", // allow interaction
+        top: { xs: 8, md: 24 },
+        right: { xs: 8, md: 24 },
+        width: { xs: width * 0.7, md: width },
+        height: { xs: height * 0.7, md: height },
+        pointerEvents: "auto",
         zIndex,
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.6s cubic-bezier(0.4,0,0.2,1)",
         ...style,
-        '@media (max-width: 600px)': {
-          width: width * 0.6,
-          height: height * 0.6,
-        },
       }}
       className={className}
     >
@@ -255,7 +255,6 @@ const AnimatedOrbHeroBG = ({
         viewBox={`0 0 ${width} ${height}`}
         id="orbSVG"
       >
-        <circle cx="10" cy="10" r="10" fill="yellow" />
         <g id="particles"></g>
         <defs>
           <radialGradient id="parentGrad" cx="50%" cy="50%" r="70%">
