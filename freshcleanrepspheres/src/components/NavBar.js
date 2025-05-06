@@ -130,8 +130,7 @@ export default function NavBar() {
                         color: '#fff',
                       }}
                     >
-                      {link.icon}
-                      <ListItemText primary={link.label} />
+                      {link.icon}{link.label}
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -194,28 +193,7 @@ export default function NavBar() {
                   }}
                   disableRipple
                 >
-                  {link.fire ? (
-                    <span
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        animation: 'fireIconPulse 2.2s infinite',
-                        ...fireIconPulse['@keyframes fireIconPulse']['0%'],
-                      }}
-                    >
-                      {React.cloneElement(link.icon, {
-                        sx: {
-                          mr: 1,
-                          fontSize: 22,
-                          color: '#fff',
-                          filter: 'drop-shadow(0 0 8px #ffb347cc) drop-shadow(0 0 16px #ff7e5f66)',
-                          transition: 'filter 0.3s',
-                        },
-                      })}
-                    </span>
-                  ) : link.icon}
-                  {link.label}
-                  {/* Subtle underline for all nav items */}
+                  {link.icon}{link.label}
                   <Box
                     className="nav-underline"
                     sx={{
