@@ -8,9 +8,28 @@ export default function SolutionSection() {
         <h2 className="section-title">Give Your Sales Team an Unfair Advantage</h2>
         <span className="section-title-underline"></span>
         <p className="section-description" style={{textAlign: 'center', maxWidth: 700, margin: '0 auto 3rem'}}>
-          RepSpheres unifies your data, workflows, and intelligence into a single, precision-engineered platform. Empower your team to move faster, win more deals, and outsmart the competition.
+          Give your team the power to move faster, personalize smarter, and close deals others miss—powered by psychological science and AI.
         </p>
-        {/* Add more content from your original HTML here */}
+        <div className="solution-cards">
+          <div className="card">
+            <div className="card-icon">⚡</div>
+            <h3 className="card-title">Instant Buyer Insights</h3>
+            <p className="card-content">Know exactly what motivates each prospect—no guesswork, just results.</p>
+          </div>
+          <div className="card">
+            <div className="card-icon">🤖</div>
+            <h3 className="card-title">Personalization at Scale</h3>
+            <p className="card-content">Deliver messaging that feels tailor-made, every time, automatically.</p>
+          </div>
+          <div className="card">
+            <div className="card-icon">🚀</div>
+            <h3 className="card-title">Seamless Automation</h3>
+            <p className="card-content">Connect your tools, automate the busywork, and let your reps focus on selling.</p>
+          </div>
+        </div>
+        <div style={{textAlign: 'center', marginTop: '3rem'}}>
+          <a href="#schedule" className="cta-button hero-cta">Start Winning More Deals</a>
+        </div>
       </div>
     </section>
   );
