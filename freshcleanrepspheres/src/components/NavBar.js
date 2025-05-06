@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,13 +46,29 @@ export default function NavBar() {
             Deep Insights
           </MenuItem>
         </Menu>
+        <Box sx={{ flexGrow: 1 }} />
         <Button
-          variant="contained"
           color="secondary"
           href="#podcasts"
-          sx={{ marginLeft: 2, fontWeight: 700 }}
+          sx={{ fontWeight: 700 }}
         >
           Podcast
+        </Button>
+        <Button
+          color="inherit"
+          variant="outlined"
+          href="#login"
+          sx={{ marginLeft: 2, fontWeight: 700, borderColor: 'white', color: 'white' }}
+        >
+          Log In
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          href="#signup"
+          sx={{ marginLeft: 2, fontWeight: 700 }}
+        >
+          Sign Up
         </Button>
       </Toolbar>
     </AppBar>
