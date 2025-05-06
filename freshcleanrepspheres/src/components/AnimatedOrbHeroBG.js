@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 /**
  * AnimatedOrbHeroBG
@@ -8,16 +9,27 @@ import Box from "@mui/material/Box";
  * - Adds interactivity: proximity color/motion, click pulse, haptics
  */
 const AnimatedOrbHeroBG = ({
-  width = 480,
-  height = 480,
   style = {},
   className = "",
   zIndex = 0,
   onClick,
-  visible = true, // NEW prop
-
+  visible = true,
 }) => {
   const svgRef = useRef();
+  const isMobile = useMediaQuery("(max-width:600px)");
+
+  // Responsive orb sizing
+  const orbBoxSize = isMobile ? 140 : 320;
+  const orbBoxTop = isMobile ? 72 : 24;
+  const orbBoxRight = isMobile ? 8 : 24;
+  const parentRadius = isMobile ? 36 : 78;
+  const childRadius = isMobile ? 11 : 24;
+  const childOrbitBase = isMobile ? 22 : 48;
+  const childOrbitStep = isMobile ? 14 : 26;
+  const childCount = 5;
+  const childPoints = 48;
+  const childAmp = 0.5;
+  const childGradIds = ["childGrad0", "childGrad1", "childGrad2", "childGrad3", "childGrad4"];
 
   useEffect(() => {
     console.log('AnimatedOrbHeroBG mounted');
@@ -85,13 +97,6 @@ const AnimatedOrbHeroBG = ({
     let mouse = { x: null, y: null, active: false };
     let pulse = 0; // pulse effect on click
 
-    // --- Orb parameters (from HTML) ---
-    const childCount = 5;
-    const parentRadius = 100;
-    const childRadius = 36;
-    const childPoints = 48;
-    const childAmp = 0.5;
-    const childGradIds = ["childGrad0", "childGrad1", "childGrad2", "childGrad3", "childGrad4"];
     // Morph personalities
     const orbMorphDirections = [Math.PI / 2];
     const orbMorphSpeeds = [0.012];
@@ -185,9 +190,9 @@ const AnimatedOrbHeroBG = ({
         state.dragTarget = approach(state.dragTarget, 0, 0.018 + orbMorphSpeeds[i] * 0.6);
       }
       // --- Parent orb ---
-      const px = width * 2 / 3;
-      const py = height / 3;
-      const parentR = parentRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * 18 : 0);
+      const px = orbBoxSize * 0.68;
+      const py = orbBoxSize * 0.38;
+      const parentR = parentRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * (isMobile ? 7 : 14) : 0);
       const parentAmp = 1 + (pulse > 0 ? Math.sin(pulse * Math.PI) * 0.3 : 0);
       const parentPath = generateSuperSmoothBlob(px, py, parentR, 64, now * 0.0004, parentAmp);
       parentOrb.setAttribute('d', parentPath);
@@ -195,14 +200,13 @@ const AnimatedOrbHeroBG = ({
       childrenGroup.innerHTML = '';
       for (let i = 0; i < childCount; i++) {
         // Animate dynamic color family for each orb
-        // (Optionally, you can use the original getDynamicColorFamily here)
         // Animate orbit
         const baseAngle = (now * 0.00022 + i * (2 * Math.PI / childCount));
         const angle = baseAngle + Math.sin(now * 0.00009 + i * 1.7) * 0.22;
-        const orbitRadius = parentR + 60 + i * 40;
+        const orbitRadius = parentR + childOrbitBase + i * childOrbitStep;
         const x = px + Math.cos(angle) * orbitRadius;
         const y = py + Math.sin(angle) * orbitRadius;
-        const cR = childRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * 6 : 0);
+        const cR = childRadius + (pulse > 0 ? Math.sin(pulse * Math.PI) * (isMobile ? 2.5 : 5) : 0);
         const cAmp = childAmp + (pulse > 0 ? Math.sin(pulse * Math.PI) * 0.1 : 0);
         const morphT = now * 0.0005 + i * 10;
         const childPath = generateSuperSmoothBlob(x, y, cR, childPoints, morphT, cAmp, i);
@@ -235,10 +239,10 @@ const AnimatedOrbHeroBG = ({
     <Box
       sx={{
         position: "absolute",
-        top: { xs: 8, md: 24 },
-        right: { xs: 8, md: 24 },
-        width: { xs: width * 0.7, md: width },
-        height: { xs: height * 0.7, md: height },
+        top: orbBoxTop,
+        right: orbBoxRight,
+        width: orbBoxSize,
+        height: orbBoxSize,
         pointerEvents: "auto",
         zIndex,
         opacity: visible ? 1 : 0,
@@ -249,10 +253,10 @@ const AnimatedOrbHeroBG = ({
     >
       <svg
         ref={svgRef}
-        width={width}
-        height={height}
+        width={orbBoxSize}
+        height={orbBoxSize}
         style={{ display: "block", background: "none" }}
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`0 0 ${orbBoxSize} ${orbBoxSize}`}
         id="orbSVG"
       >
         <g id="particles"></g>
