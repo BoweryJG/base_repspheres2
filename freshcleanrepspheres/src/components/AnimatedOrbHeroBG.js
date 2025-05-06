@@ -232,7 +232,8 @@ const AnimatedOrbHeroBG = ({
       svg.removeEventListener('click', handleClick);
     };
 
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Responsive, absolutely positioned in upper right
   return (
