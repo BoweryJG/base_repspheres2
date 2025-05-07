@@ -357,7 +357,7 @@ const AnimatedOrbHeroBG = ({
         ref={svgRef}
         width="100vw"
         height="100vh"
-        style={{ display: "block", background: "#0B0B20" }}
+        style={{ display: "block", background: "transparent" }}
         viewBox={`0 0 ${typeof window !== 'undefined' ? window.innerWidth : 1920} ${typeof window !== 'undefined' ? window.innerHeight : 1080}`}
       >
         <defs>
