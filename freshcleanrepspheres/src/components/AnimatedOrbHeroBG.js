@@ -301,11 +301,6 @@ const AnimatedOrbHeroBG = ({
           path.setAttribute("fill", `url(#${childGradIds[i]})`);
           path.setAttribute("opacity", childOpacity);
           childrenGroup.appendChild(path);
-          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          path.setAttribute("d", childPath);
-          path.setAttribute("fill", `url(#${childGradIds[i]})`);
-          path.setAttribute("opacity", 0.95);
-          childrenGroup.appendChild(path);
           // Particle emission logic (subtle, demo: emit 1 particle per frame from each child orb)
           emitParticles(x, y, lerpColor(fam[0], fam[1], tcol), 1);
         }
