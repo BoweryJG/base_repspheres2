@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+
 const AnimatedOrbHeroBG = ({
   style = {},
   className = "",
@@ -8,6 +9,26 @@ const AnimatedOrbHeroBG = ({
   sx = {},
   disperse = false,
 }) => {
+  // --- Interactive Orb Ripple/Jump State ---
+  const [ripples, setRipples] = useState([]); // {cx, cy, r, color, width, opacity}
+  const [orbJump, setOrbJump] = useState({}); // {orbIdx, dx, dy, t, active}
+  const [hoveredOrb, setHoveredOrb] = useState(null);
+
+  // Animate ripples
+  useEffect(() => {
+    if (!ripples.length) return;
+    let raf;
+    function animate() {
+      setRipples(prev => prev
+        .map(r => ({ ...r, r: r.r + 3, opacity: r.opacity * 0.93 }))
+        .filter(r => r.opacity > 0.04)
+      );
+      if (ripples.length) raf = requestAnimationFrame(animate);
+    }
+    raf = requestAnimationFrame(animate);
+    return () => raf && cancelAnimationFrame(raf);
+  }, [ripples.length]);
+
   // Animation state: 'idle', 'dispersing', 'assembling'
   const [animState, setAnimState] = useState('idle');
   const [animProgress, setAnimProgress] = useState(0); // 0 to 1
@@ -390,13 +411,13 @@ const AnimatedOrbHeroBG = ({
             <stop id="c3s1" offset="100%" stopColor="#311B4F" />
           </radialGradient>
           <radialGradient id="childGrad4" cx="40%" cy="40%" r="75%">
-            <stop id="c4s0" offset="0%" stopColor="#FFF5B3" />
-            <stop id="c4s1" offset="100%" stopColor="#4B3800" />
-          </radialGradient>
-        </defs>
-        <g id="particles"></g>
-        <path id="parentOrb" ref={parentOrbRef} fill="url(#parentGrad)" opacity="0.95" />
-        <g id="children" ref={childrenGroupRef}></g>
+            r={ripple.r}
+            fill="none"
+            stroke={ripple.color}
+            strokeWidth={ripple.width}
+            opacity={ripple.opacity}
+          />
+        ))}
       </svg>
     </Box>
   );
