@@ -36,8 +36,15 @@ export default function HeroSection() {
       <AnimatedOrbHeroBG
         width={480}
         height={480}
-        zIndex={2}
+        zIndex={-1}
         visible={showOrb}
+        style={{
+          opacity: 0.85,
+        }}
+        sx={{
+          right: { xs: '-20%', md: '-5%' },
+          top: { xs: '25%', md: '30%' },
+        }}
       />
       <Container maxWidth="md">
         <Typography
@@ -52,9 +59,11 @@ export default function HeroSection() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
-          Sales <Box component="span" sx={{ background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Intelligence</Box> Evolved
+          The Future of Sales <Box component="span" sx={{ background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Intelligence</Box>
         </Typography>
         <Typography
           variant="h6"
@@ -65,9 +74,11 @@ export default function HeroSection() {
             mx: 'auto',
             fontWeight: 400,
             fontSize: { xs: '1.18rem', md: '1.33rem' },
+            position: 'relative',
+            zIndex: 2,
           }}
         >
-          Give your team the unfair advantage of AI-driven psychology—decode what makes buyers say "yes," eliminate guesswork, and engineer success at every stage of the sales journey.
+          Real-time insights. Instant automation. Unmatched speed.
         </Typography>
         <Button
           variant="contained"
@@ -84,6 +95,8 @@ export default function HeroSection() {
             color: '#fff',
             transition: 'all 0.22s',
             mt: 2,
+            position: 'relative',
+            zIndex: 2,
             '&:hover': {
               background: 'linear-gradient(90deg, #5B3CFF 0%, #00ffc6 100%)',
               boxShadow: '0 8px 36px rgba(123,66,246,0.22)',
@@ -92,7 +105,7 @@ export default function HeroSection() {
             }
           }}
         >
-          Start Winning More Deals
+          Get Started →
         </Button>
       </Container>
     </Box>
