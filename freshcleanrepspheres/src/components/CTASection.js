@@ -55,11 +55,50 @@ export default function CTASection() {
             boxShadow: '0 8px 36px rgba(123,66,246,0.22)',
             color: '#fff',
             transform: 'translateY(-2px) scale(1.04)'
-          }
+          },
+          display: { xs: 'none', md: 'inline-flex' }
         }}
       >
         Schedule a Call
       </Button>
+      {/* Sticky mobile CTA */}
+      <Box sx={{
+        display: { xs: 'flex', md: 'none' },
+        position: 'fixed',
+        left: 0,
+        right: 0,
+        bottom: 16,
+        zIndex: 2000,
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}>
+        <Button
+          variant="contained"
+          href="#contact"
+          size="large"
+          sx={{
+            px: 5,
+            py: 1.7,
+            fontWeight: 700,
+            fontSize: '1.08rem',
+            borderRadius: '28px',
+            background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
+            boxShadow: '0 8px 36px 0 rgba(123,66,246,0.22)',
+            color: '#fff',
+            pointerEvents: 'auto',
+            textTransform: 'none',
+            transition: 'all 0.22s',
+            '&:hover': {
+              background: 'linear-gradient(90deg, #5B3CFF 0%, #00ffc6 100%)',
+              boxShadow: '0 12px 48px 0 rgba(123,66,246,0.29)',
+              color: '#fff',
+              transform: 'translateY(-2px) scale(1.04)'
+            }
+          }}
+        >
+          Schedule a Call
+        </Button>
+      </Box>
     </Box>
   );
 }

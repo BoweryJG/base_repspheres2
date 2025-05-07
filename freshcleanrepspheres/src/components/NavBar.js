@@ -73,22 +73,16 @@ export default function NavBar() {
   };
 
   return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      sx={{
-        background: 'rgba(255, 255, 255, 0.08)',
-        backdropFilter: 'blur(14px)',
-        border: 'none',
-        boxShadow: '0 2px 18px 0 rgba(30,30,60,0.08)',
-        zIndex: 1301,
-        minHeight: { xs: 34, md: 38 },
-      }}
-    >
-      <Toolbar sx={{ justifyContent: 'center', minHeight: { xs: 20, md: 23 }, px: { xs: 1, md: 2 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', fontWeight: 900, fontSize: '1.35rem', letterSpacing: '0.09em', color: '#fff', userSelect: 'none' }}>
-  {orb}
-  <span style={{
+    <AppBar position="sticky" elevation={0} sx={{
+      background: 'linear-gradient(90deg, rgba(24,24,43,0.72) 60%, rgba(123,66,246,0.44) 100%)',
+      boxShadow: '0 8px 32px 0 rgba(123,66,246,0.17)',
+      backdropFilter: 'blur(22px)',
+      borderBottom: '1.5px solid rgba(123,66,246,0.10)',
+      zIndex: 1200,
+      borderRadius: { xs: '0 0 18px 18px', md: '0 0 32px 32px' },
+      mx: { xs: 1, md: 3 },
+      mt: { xs: 1, md: 2 },
+      width: { xs: 'calc(100% - 8px)', md: 'calc(100% - 48px)' },
     fontFamily: 'Montserrat, DM Sans, Arial, sans-serif',
     fontWeight: 700,
     color: '#fff',
