@@ -7,7 +7,7 @@ import SolutionSection from './components/SolutionSection';
 import TimelineSection from './components/TimelineSection';
 import DeploymentSection from './components/DeploymentSection';
 
-import MoatSection from './components/MoatSection';
+
 import CTASection from './components/CTASection';
 import IntelligenceSection from './components/IntelligenceSection';
 import Footer from './components/Footer';
@@ -22,7 +22,7 @@ function App() {
       <SolutionSection />
       <TimelineSection />
       <DeploymentSection />
-      <MoatSection />
+
       <CTASection />
       <Footer />
       {/* Add more sections/components as needed */}
