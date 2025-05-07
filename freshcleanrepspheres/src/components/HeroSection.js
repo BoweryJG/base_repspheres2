@@ -38,12 +38,22 @@ export default function HeroSection() {
         height={480}
         zIndex={-1}
         visible={showOrb}
+        // When hero is not visible, trigger dispersal (handled in AnimatedOrbHeroBG)
+        disperse={!showOrb}
         style={{
           opacity: 0.85,
+          position: 'absolute',
+          pointerEvents: 'none',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
         }}
         sx={{
-          right: { xs: '-20%', md: '-5%' },
-          top: { xs: '25%', md: '30%' },
+          right: 0,
+          top: 0,
+          left: 0,
+          bottom: 0,
         }}
       />
       <Container maxWidth="md">
