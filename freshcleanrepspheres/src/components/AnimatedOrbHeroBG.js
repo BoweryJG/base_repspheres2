@@ -411,12 +411,15 @@ const AnimatedOrbHeroBG = ({
             <stop id="c3s1" offset="100%" stopColor="#311B4F" />
           </radialGradient>
           <radialGradient id="childGrad4" cx="40%" cy="40%" r="75%">
-            r={ripple.r}
-            fill="none"
-            stroke={ripple.color}
-            strokeWidth={ripple.width}
-            opacity={ripple.opacity}
-          />
+            <stop id="c4s0" offset="0%" stopColor="#FFF5B3" />
+            <stop id="c4s1" offset="100%" stopColor="#4B3800" />
+          </radialGradient>
+        </defs>
+        <g id="particles"></g>
+        <path id="parentOrb" ref={parentOrbRef} fill="url(#parentGrad)" opacity="0.95" style={{ cursor: 'pointer', pointerEvents: 'all' }} />
+        <g id="children" ref={childrenGroupRef}></g>
+        {ripples.map((ripple, idx) => (
+          <circle key={idx} cx={ripple.cx} cy={ripple.cy} r={ripple.r} fill="none" stroke={ripple.color} strokeWidth={ripple.width} opacity={ripple.opacity} />
         ))}
       </svg>
     </Box>
