@@ -140,8 +140,8 @@ const AnimatedOrbHeroBG = ({
     }
     // --- Orb State ---
     const childCount = 5;
-    const parentRadius = 80; // Reduced to 80% of original size
-    const childRadius = 29; // Proportionally reduced
+    const parentRadius = 60; // Reduced to 60% of original size
+    const childRadius = 22; // Proportionally reduced
     const childPoints = 48;
     const childAmp = 0.5;
     const childGradIds = [
