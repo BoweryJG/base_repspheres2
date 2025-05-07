@@ -108,14 +108,15 @@ const AnimatedOrbHeroBG = ({
     }
     function generateSuperSmoothBlob(cx, cy, r, points, t, amp = 1, phase = 0) {
       const pts = [];
+      // Generate more points for ultra-smooth appearance
       for (let i = 0; i < points; i++) {
         const angle = (Math.PI * 2 * i) / points;
-        // More subtle, higher-frequency variations for a more spherical look
-        // with organic texture rather than large deformations
+        // Use gentler, lower-frequency variations with reduced amplitude
+        // for a more naturally smooth spherical appearance
         const noise =
-          Math.sin(angle * 4 + t * 0.5 + phase) * 2.5 * amp +
-          Math.sin(angle * 7 - t * 0.8 + phase) * 1.5 * amp +
-          Math.sin(angle * 10 + t * 1.2 + phase) * 0.8 * amp;
+          Math.sin(angle * 2 + t * 0.4 + phase) * 1.8 * amp +
+          Math.sin(angle * 3 - t * 0.5 + phase) * 1.2 * amp +
+          Math.sin(angle * 5 + t * 0.7 + phase) * 0.5 * amp;
         const rad = r + noise;
         pts.push({
           x: cx + Math.cos(angle) * rad,
@@ -131,10 +132,12 @@ const AnimatedOrbHeroBG = ({
         if (i === 0) {
           d += `M${p1.x.toFixed(2)},${p1.y.toFixed(2)}`;
         }
-        const c1x = p1.x + (p2.x - p0.x) / 6;
-        const c1y = p1.y + (p2.y - p0.y) / 6;
-        const c2x = p2.x - (p3.x - p1.x) / 6;
-        const c2y = p2.y - (p3.y - p1.y) / 6;
+        // Use gentler control point positioning (1/3 instead of 1/6)
+        // for smoother transitions between points
+        const c1x = p1.x + (p2.x - p0.x) / 3;
+        const c1y = p1.y + (p2.y - p0.y) / 3;
+        const c2x = p2.x - (p3.x - p1.x) / 3;
+        const c2y = p2.y - (p3.y - p1.y) / 3;
         d += ` C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p2.x.toFixed(2)},${p2.y.toFixed(2)}`;
       }
       d += "Z";
@@ -144,10 +147,10 @@ const AnimatedOrbHeroBG = ({
     const childCount = 5;
     const parentRadius = 60; // Reduced to 60% of original size
     const childRadius = 22; // Proportionally reduced
-    const parentPoints = 72; // Increased for smoother parent orb
-    const childPoints = [52, 48, 56, 50, 54]; // Varied points for each child
-    const parentAmp = 0.7; // Reduced amplitude for more spherical shape
-    const childAmps = [0.35, 0.4, 0.3, 0.45, 0.38]; // Varied but reduced amplitudes
+    const parentPoints = 144; // Significantly increased for ultra-smooth parent orb
+    const childPoints = [120, 128, 124, 132, 126]; // Significantly increased for ultra-smooth child orbs
+    const parentAmp = 0.5; // Further reduced amplitude for more spherical shape
+    const childAmps = [0.25, 0.28, 0.22, 0.26, 0.24]; // Further reduced amplitudes for smoother shapes
     const childGradIds = [
       "childGrad0", "childGrad1", "childGrad2", "childGrad3", "childGrad4"
     ];
