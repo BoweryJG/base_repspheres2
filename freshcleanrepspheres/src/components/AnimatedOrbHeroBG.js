@@ -110,10 +110,12 @@ const AnimatedOrbHeroBG = ({
       const pts = [];
       for (let i = 0; i < points; i++) {
         const angle = (Math.PI * 2 * i) / points;
+        // More subtle, higher-frequency variations for a more spherical look
+        // with organic texture rather than large deformations
         const noise =
-          Math.sin(angle * 3 + t * 0.7 + phase) * 4 * amp +
-          Math.sin(angle * 5 - t * 1.1 + phase) * 2 * amp +
-          Math.sin(angle * 2 + t * 1.7 + phase) * 1.2 * amp;
+          Math.sin(angle * 4 + t * 0.5 + phase) * 2.5 * amp +
+          Math.sin(angle * 7 - t * 0.8 + phase) * 1.5 * amp +
+          Math.sin(angle * 10 + t * 1.2 + phase) * 0.8 * amp;
         const rad = r + noise;
         pts.push({
           x: cx + Math.cos(angle) * rad,
@@ -142,8 +144,10 @@ const AnimatedOrbHeroBG = ({
     const childCount = 5;
     const parentRadius = 60; // Reduced to 60% of original size
     const childRadius = 22; // Proportionally reduced
-    const childPoints = 48;
-    const childAmp = 0.5;
+    const parentPoints = 72; // Increased for smoother parent orb
+    const childPoints = [52, 48, 56, 50, 54]; // Varied points for each child
+    const parentAmp = 0.7; // Reduced amplitude for more spherical shape
+    const childAmps = [0.35, 0.4, 0.3, 0.45, 0.38]; // Varied but reduced amplitudes
     const childGradIds = [
       "childGrad0", "childGrad1", "childGrad2", "childGrad3", "childGrad4"
     ];
@@ -231,8 +235,7 @@ const AnimatedOrbHeroBG = ({
         parentOpacity = 0.95 * animProgress;
       }
       const parentR = parentRadius;
-      const parentAmp = 1;
-      const parentPath = generateSuperSmoothBlob(px + parentDx, py + parentDy, parentR, 64, parentMorphT, parentAmp);
+      const parentPath = generateSuperSmoothBlob(px + parentDx, py + parentDy, parentR, parentPoints, parentMorphT, parentAmp);
       if (parentOrbRef.current) {
         parentOrbRef.current.setAttribute('d', parentPath);
         parentOrbRef.current.setAttribute('opacity', parentOpacity);
@@ -292,9 +295,9 @@ const AnimatedOrbHeroBG = ({
           if (grad0) grad0.setAttribute('stop-color', lerpColor(fam[0], fam[1], tcol));
           if (grad1) grad1.setAttribute('stop-color', lerpColor(fam[1], fam[0], tcol));
           const cR = childRadius;
-          const cAmp = childAmp;
+          const cAmp = childAmps[i];
           const morphT = now * 0.0005 + i * 10;
-          const childPath = generateSuperSmoothBlob(childPx, childPy, cR, childPoints, morphT, cAmp, i);
+          const childPath = generateSuperSmoothBlob(childPx, childPy, cR, childPoints[i], morphT, cAmp, i);
           const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path.setAttribute("d", childPath);
           path.setAttribute("fill", `url(#${childGradIds[i]})`);
@@ -361,29 +364,29 @@ const AnimatedOrbHeroBG = ({
         viewBox={`0 0 ${typeof window !== 'undefined' ? window.innerWidth : 1920} ${typeof window !== 'undefined' ? window.innerHeight : 1080}`}
       >
         <defs>
-          <radialGradient id="parentGrad" cx="50%" cy="50%" r="70%">
+          <radialGradient id="parentGrad" cx="40%" cy="40%" r="80%">
             <stop id="p0" offset="0%" stopColor="#00E5FF" />
             <stop id="p1" offset="100%" stopColor="#5B3CFF" />
             <stop id="p2" offset="50%" stopColor="#00E5FF" />
             <stop id="p3" offset="75%" stopColor="#5B3CFF" />
           </radialGradient>
-          <radialGradient id="childGrad0" cx="50%" cy="50%" r="70%">
+          <radialGradient id="childGrad0" cx="35%" cy="35%" r="80%">
             <stop id="c0s0" offset="0%" stopColor="#B3D8FF" />
             <stop id="c0s1" offset="100%" stopColor="#0A192F" />
           </radialGradient>
-          <radialGradient id="childGrad1" cx="50%" cy="50%" r="70%">
+          <radialGradient id="childGrad1" cx="40%" cy="40%" r="75%">
             <stop id="c1s0" offset="0%" stopColor="#C6FFD9" />
             <stop id="c1s1" offset="100%" stopColor="#145A32" />
           </radialGradient>
-          <radialGradient id="childGrad2" cx="50%" cy="50%" r="70%">
+          <radialGradient id="childGrad2" cx="30%" cy="30%" r="85%">
             <stop id="c2s0" offset="0%" stopColor="#FFB3C9" />
             <stop id="c2s1" offset="100%" stopColor="#7B1F3A" />
           </radialGradient>
-          <radialGradient id="childGrad3" cx="50%" cy="50%" r="70%">
+          <radialGradient id="childGrad3" cx="35%" cy="35%" r="80%">
             <stop id="c3s0" offset="0%" stopColor="#E0D1FF" />
             <stop id="c3s1" offset="100%" stopColor="#311B4F" />
           </radialGradient>
-          <radialGradient id="childGrad4" cx="50%" cy="50%" r="70%">
+          <radialGradient id="childGrad4" cx="40%" cy="40%" r="75%">
             <stop id="c4s0" offset="0%" stopColor="#FFF5B3" />
             <stop id="c4s1" offset="100%" stopColor="#4B3800" />
           </radialGradient>
