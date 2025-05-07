@@ -57,67 +57,97 @@ export default function HeroSection() {
         }}
       />
       <Container maxWidth="md" sx={{ mt: { xs: 20, md: 24 } }}>
-        <Typography
-          variant="h1"
-          sx={{
-            fontWeight: 900,
-            fontSize: { xs: '2.8rem', md: '4.1rem' },
-            mb: 2.5,
-            letterSpacing: '-0.04em',
-            lineHeight: 1.09,
-            background: 'linear-gradient(90deg, #fff 60%, #00ffc6 80%, #7B42F6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            position: 'relative',
-            zIndex: 2,
-          }}
-        >
-          The Future of Sales <Box component="span" sx={{ background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Intelligence</Box>
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'rgba(255,255,255,0.85)',
-            mb: 5,
-            maxWidth: 600,
-            mx: 'auto',
-            fontWeight: 400,
-            fontSize: { xs: '1.18rem', md: '1.33rem' },
-            position: 'relative',
-            zIndex: 2,
-          }}
-        >
-          Real-time insights. Instant automation. Unmatched speed.
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          href="#schedule"
-          sx={{
-            px: 6,
-            py: 2.1,
-            fontWeight: 700,
-            fontSize: { xs: '1.13rem', md: '1.22rem' },
-            borderRadius: '30px',
-            background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
-            boxShadow: '0 4px 24px rgba(123,66,246,0.18)',
-            color: '#fff',
-            transition: 'all 0.22s',
-            mt: 2,
-            position: 'relative',
-            zIndex: 2,
-            '&:hover': {
-              background: 'linear-gradient(90deg, #5B3CFF 0%, #00ffc6 100%)',
-              boxShadow: '0 8px 36px rgba(123,66,246,0.22)',
-              color: '#fff',
-              transform: 'translateY(-2px) scale(1.04)'
-            }
-          }}
-        >
-          Get Started →
-        </Button>
-      </Container>
+  <Typography
+    variant="h1"
+    sx={{
+      fontFamily: "'Space Grotesk', 'Montserrat Alternates', Arial, sans-serif",
+      fontWeight: 800,
+      fontSize: { xs: '2.9rem', md: '4.2rem' },
+      mb: 2.5,
+      letterSpacing: '-0.03em',
+      lineHeight: 1.08,
+      background: 'linear-gradient(92deg, #00ffc6 0%, #3a86ff 40%, #7B42F6 80%, #fff 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      textShadow: '0 6px 32px rgba(58,134,255,0.14), 0 1px 0 #00ffc6',
+      position: 'relative',
+      zIndex: 2,
+      animation: 'gradientMove 5s ease-in-out infinite alternate',
+      '@keyframes gradientMove': {
+        '0%': { backgroundPosition: '0% 50%' },
+        '100%': { backgroundPosition: '100% 50%' }
+      }
+    }}
+  >
+    The Future of <Box component="span" sx={{
+      background: 'linear-gradient(90deg, #fff 10%, #00ffc6 50%, #7B42F6 90%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      fontWeight: 900,
+      letterSpacing: '-0.01em',
+      textShadow: '0 2px 12px #00ffc688, 0 1px 0 #fff',
+      px: 0.5,
+      animation: 'shine 2.5s linear infinite alternate',
+      '@keyframes shine': {
+        '0%': { filter: 'brightness(1.1)' },
+        '100%': { filter: 'brightness(1.4)' }
+      }
+    }}>Sales Intelligence</Box>
+  </Typography>
+  <Typography
+    variant="h6"
+    sx={{
+      fontFamily: "'DM Sans', Arial, sans-serif",
+      color: 'rgba(255,255,255,0.92)',
+      mb: 5,
+      maxWidth: 600,
+      mx: 'auto',
+      fontWeight: 400,
+      fontSize: { xs: '1.18rem', md: '1.33rem' },
+      letterSpacing: '0.03em',
+      background: 'linear-gradient(90deg, #b6b6c8 0%, #00ffc6 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      position: 'relative',
+      zIndex: 2,
+    }}
+  >
+    Real-time insights. Instant automation. Unmatched speed.
+  </Typography>
+  <Button
+    variant="contained"
+    size="large"
+    href="#schedule"
+    sx={{
+      px: 6,
+      py: 2.1,
+      fontWeight: 800,
+      fontFamily: "'Space Grotesk', 'Montserrat Alternates', Arial, sans-serif",
+      fontSize: { xs: '1.14rem', md: '1.22rem' },
+      borderRadius: '30px',
+      background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
+      boxShadow: '0 4px 24px rgba(123,66,246,0.18), 0 1.5px 18px #00ffc633',
+      color: '#fff',
+      letterSpacing: '0.04em',
+      textTransform: 'uppercase',
+      transition: 'all 0.22s',
+      mt: 2,
+      position: 'relative',
+      zIndex: 2,
+      '&:hover': {
+        background: 'linear-gradient(270deg, #7B42F6 0%, #00ffc6 100%)',
+        boxShadow: '0 8px 36px rgba(123,66,246,0.22), 0 2px 24px #00ffc655',
+        color: '#fff',
+        transform: 'translateY(-2px) scale(1.045)'
+      }
+    }}
+  >
+    Get Started →
+  </Button>
+</Container>
     </Box>
   );
 }

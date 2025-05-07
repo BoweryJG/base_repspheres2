@@ -15,6 +15,8 @@ import { useTheme } from '@mui/material/styles';
 import InsightsIcon from '@mui/icons-material/Insights';
 import AppsIcon from '@mui/icons-material/Apps';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
+import LoginIcon from '@mui/icons-material/Login';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const navLinks = [
   { label: 'Market Insights', href: '/blog.html', emphasize: false, icon: <InsightsIcon sx={{ mr: 1, fontSize: 22 }} />, fire: true },
@@ -39,7 +41,7 @@ export default function NavBar() {
 
   // Orb SVG for brand
   const orb = (
-    <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginRight: 10 }}>
+    <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginRight: 10, filter: 'drop-shadow(0 0 6px #7B42F6AA)' }}>
       <defs>
         <radialGradient id="orbGrad" cx="50%" cy="50%" r="70%">
           <stop offset="0%" stopColor="#00ffc6" />
@@ -52,17 +54,21 @@ export default function NavBar() {
   );
 
   const navButtonStyle = {
-    fontWeight: 600,
-    letterSpacing: '0.03em',
-    fontSize: '1.08rem',
-    px: 2,
-    py: 1,
-    borderRadius: '30px',
-    transition: 'all 0.22s',
+    fontWeight: 400,
+    letterSpacing: '0.04em',
+    fontSize: '1.04rem',
+    px: 1.2,
+    py: 0,
+    borderRadius: 0,
+    background: 'none',
+    boxShadow: 'none',
+    transition: 'color 0.2s, border-bottom 0.2s',
+    borderBottom: '2px solid transparent',
     '&:hover': {
-      color: 'var(--secondary)',
-      background: 'rgba(123,66,246,0.10)',
-      boxShadow: '0 2px 12px rgba(123,66,246,0.10)'
+      color: '#3a86ff',
+      background: 'none',
+      borderBottom: '2px solid #3a86ff',
+      boxShadow: 'none',
     },
   };
 
@@ -71,20 +77,39 @@ export default function NavBar() {
       position="fixed"
       elevation={0}
       sx={{
-        background: 'rgba(20,14,38,0.74)',
-        backdropFilter: 'blur(18px) saturate(180%)',
-        borderBottom: '2.5px solid',
-        borderImage: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%) 1',
-        boxShadow: '0 4px 32px 0 rgba(123,66,246,0.10)',
+        background: 'rgba(255, 255, 255, 0.08)',
+        backdropFilter: 'blur(14px)',
+        border: 'none',
+        boxShadow: '0 2px 18px 0 rgba(30,30,60,0.08)',
         zIndex: 1301,
-        minHeight: { xs: 56, md: 64 },
+        minHeight: { xs: 34, md: 38 },
       }}
     >
-      <Toolbar sx={{ justifyContent: 'space-between', minHeight: { xs: 56, md: 64 }, px: { xs: 2, md: 4 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', fontWeight: 900, fontSize: '1.7rem', letterSpacing: '0.02em', color: '#fff' }}>
-          {orb}
-          RepSpheres
-        </Box>
+      <Toolbar sx={{ justifyContent: 'center', minHeight: { xs: 20, md: 23 }, px: { xs: 1, md: 2 } }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', fontWeight: 900, fontSize: '1.35rem', letterSpacing: '0.09em', color: '#fff', userSelect: 'none' }}>
+  {orb}
+  <span style={{
+    fontFamily: 'Montserrat, DM Sans, Arial, sans-serif',
+    fontWeight: 700,
+    color: '#fff',
+    marginLeft: 6,
+    letterSpacing: '0.01em',
+    display: 'flex',
+    alignItems: 'center',
+  }}>
+    <span style={{ fontWeight: 800, letterSpacing: '0.09em', marginRight: 2 }}>Rep</span>
+    <span style={{
+      background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      fontWeight: 800,
+      letterSpacing: '0.09em',
+      transition: 'background 0.4s',
+    }}>
+      Spheres
+    </span>
+  </span>
+</Box>
         {isMobile ? (
           <>
             <IconButton edge="end" color="inherit" onClick={() => setDrawerOpen(true)}>
@@ -161,24 +186,30 @@ export default function NavBar() {
             </Drawer>
           </>
         ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box sx={{
+  display: 'flex',
+  alignItems: 'center',
+  gap: 1.5,
+  justifyContent: 'center',
+  width: '100%',
+}}>
             {navLinks.map((link) => (
               <Box key={link.label} sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <Button
                   href={link.href}
                   sx={{
                     ...navButtonStyle,
-                    opacity: link.emphasize ? 0.6 : 1,
+                    opacity: link.emphasize ? 0.7 : 1,
                     color: '#fff',
-                    fontWeight: link.emphasize ? 600 : 700,
-                    fontSize: link.emphasize ? '1rem' : '1.08rem',
-                    letterSpacing: '0.01em',
+                    fontWeight: 400,
+                    fontSize: '1.04rem',
+                    letterSpacing: '0.04em',
                     display: 'flex',
                     alignItems: 'center',
                     minWidth: 0,
-                    px: 2.2,
+                    px: 1.8,
                     mx: 0.5,
-                    background: 'transparent',
+                    background: 'none',
                     boxShadow: 'none',
                     position: 'relative',
                     zIndex: 2,
@@ -208,19 +239,25 @@ export default function NavBar() {
             <Button
               href="/login.html"
               variant="outlined"
+              startIcon={<LoginIcon sx={{ fontSize: 18 }} />}
               sx={{
                 ...navButtonStyle,
-                border: '2px solid #fff',
+                border: '1.5px solid #fff',
                 color: '#fff',
                 ml: 2,
-                fontWeight: 700,
-                background: 'rgba(123,66,246,0.07)',
-                borderRadius: '32px',
-                px: 3,
+                fontWeight: 500,
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(6px)',
+                borderRadius: '18px',
+                px: 2.2,
+                fontSize: '1.04rem',
+                letterSpacing: '0.04em',
+                boxShadow: '0 1px 6px rgba(58,134,255,0.10)',
+                transition: 'all 0.18s',
                 '&:hover': {
-                  background: 'rgba(123,66,246,0.18)',
-                  borderColor: 'var(--secondary)',
-                  color: 'var(--secondary)'
+                  background: 'rgba(58,134,255,0.18)',
+                  color: '#3a86ff',
+                  borderColor: '#3a86ff',
                 }
               }}
             >
@@ -229,20 +266,22 @@ export default function NavBar() {
             <Button
               href="/signup.html"
               variant="contained"
+              endIcon={<ArrowForwardIcon sx={{ fontSize: 20 }} />}
               sx={{
                 ...navButtonStyle,
                 ml: 2,
-                background: 'linear-gradient(135deg, #7B42F6 0%, #00ffc6 100%)',
+                background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
                 color: '#fff',
-                fontWeight: 900,
-                fontSize: '1.13rem',
-                px: 4,
-                borderRadius: '32px',
-                boxShadow: '0 4px 20px rgba(123,66,246,0.18)',
+                fontWeight: 700,
+                fontSize: '1.09rem',
+                borderRadius: '18px',
+                px: 3.2,
+                boxShadow: '0 2px 10px rgba(58,134,255,0.16)',
+                transition: 'all 0.18s',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #5B3CFF 0%, #00ffc6 100%)',
-                  color: '#fff',
-                  transform: 'scale(1.045)'
+                  background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
+                  boxShadow: '0 4px 20px rgba(123,66,246,0.22)',
+                  transform: 'scale(1.04)'
                 }
               }}
             >
