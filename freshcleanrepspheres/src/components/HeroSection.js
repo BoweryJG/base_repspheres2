@@ -148,6 +148,33 @@ export default function HeroSection() {
     Get Started →
   </Button>
 </Container>
+      {/* Visually stunning SVG wave divider */}
+      <Box sx={{ width: '100%', lineHeight: 0, position: 'relative', zIndex: 2 }}>
+        <svg viewBox="0 0 1440 180" width="100%" height="100" preserveAspectRatio="none" style={{ display: 'block' }}>
+          <defs>
+            <linearGradient id="waveGradient" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stopColor="#00ffc6" stopOpacity="0.45" />
+              <stop offset="60%" stopColor="#7B42F6" stopOpacity="0.36" />
+              <stop offset="100%" stopColor="#18182B" stopOpacity="0.9" />
+            </linearGradient>
+            <filter id="glassBlur" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="14" result="blur"/>
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.45"/>
+              </feComponentTransfer>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path
+            d="M0,80 C480,170 960,0 1440,120 L1440,180 L0,180 Z"
+            fill="url(#waveGradient)"
+            filter="url(#glassBlur)"
+          />
+        </svg>
+      </Box>
     </Box>
   );
 }
