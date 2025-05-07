@@ -148,8 +148,17 @@ export default function HeroSection() {
     Get Started →
   </Button>
 </Container>
-      {/* Visually stunning SVG wave divider */}
-      <Box sx={{ width: '100%', lineHeight: 0, position: 'relative', zIndex: 2 }}>
+      {/* Visually stunning SVG wave divider - now absolutely positioned */}
+      <Box sx={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        lineHeight: 0,
+        zIndex: 3,
+        pointerEvents: 'none',
+      }}>
         <svg viewBox="0 0 1440 180" width="100%" height="100" preserveAspectRatio="none" style={{ display: 'block' }}>
           <defs>
             <linearGradient id="waveGradient" x1="0" x2="1" y1="0" y2="1">
