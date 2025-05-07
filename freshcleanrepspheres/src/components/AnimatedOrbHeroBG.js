@@ -307,38 +307,6 @@ const AnimatedOrbHeroBG = ({
 };
 
 export default AnimatedOrbHeroBG;
-
-        window.dispatchEvent(new CustomEvent('orb-clicked'));
-      }
-    }
-    svg.addEventListener('mousemove', handlePointerMove);
-    svg.addEventListener('mouseleave', handlePointerLeave);
-    svg.addEventListener('touchmove', handlePointerMove, { passive: false });
-    svg.addEventListener('touchend', handlePointerLeave);
-    svg.addEventListener('click', handleClick);
-
-    // --- Animation loop ---
-    function animate() {
-      const now = performance.now();
-      // Animate parent gradient (fluid, spectrum, multi-stop)
-      const parentStops = [ { id: "p0", phase: 0 }, { id: "p1", phase: Math.PI * 0.5 }, { id: "p2", phase: Math.PI }, { id: "p3", phase: Math.PI * 1.5 } ];
-      const baseHue = (now * 0.01) % 360;
-      for (let i = 0; i < parentStops.length; i++) {
-        const stop = parentStops[i];
-        const hue = (baseHue + 60 * Math.sin(now * 0.00015 + stop.phase)) % 360;
-        const sat = 80 + 10 * Math.sin(now * 0.0002 + stop.phase);
-        const light = 60 + 10 * Math.cos(now * 0.00018 + stop.phase);
-        const gradStop = svg.querySelector(`#${stop.id}`);
-        if (gradStop) gradStop.setAttribute('stop-color', hslToHex(hue, sat, light));
-      }
-      // Animate orb morph states
-      for (let i = 0; i < orbStates.length; i++) {
-        const state = orbStates[i];
-        const spring = 0.045 * (1 + orbMorphSpeeds[i]);
-        const damping = 0.90 - orbMorphSpeeds[i] * 0.33;
-        [state.drag, state.dragV] = dampedSpring(state.drag, state.dragTarget, state.dragV, spring, damping);
-        if (Math.abs(state.dragTarget) < 0.1 && Math.abs(state.drag) > 0.1) {
-          state.wobble += 0.04 + orbMorphSpeeds[i] * 0.9;
           state.drag += Math.sin(state.wobble) * Math.max(0, Math.abs(state.drag) * 0.13 * (1 + orbMorphSpeeds[i]));
         } else if (Math.abs(state.dragTarget) < 0.1) {
           state.wobble = 0;
