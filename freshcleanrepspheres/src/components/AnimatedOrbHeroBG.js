@@ -1,7 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import Box from "@mui/material/Box";
-
 import React, { useRef, useEffect, useState } from "react";
+import Box from "@mui/material/Box";
 const AnimatedOrbHeroBG = ({
   style = {},
   className = "",
@@ -142,8 +140,8 @@ const AnimatedOrbHeroBG = ({
     }
     // --- Orb State ---
     const childCount = 5;
-    const parentRadius = 100;
-    const childRadius = 36;
+    const parentRadius = 80; // Reduced to 80% of original size
+    const childRadius = 29; // Proportionally reduced
     const childPoints = 48;
     const childAmp = 0.5;
     const childGradIds = [
@@ -216,7 +214,8 @@ const AnimatedOrbHeroBG = ({
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       let px = vw / 2 + Math.sin(now * 0.00011) * vw * 0.09 + Math.cos(now * 0.00007) * vw * 0.07;
-      let py = vh / 2 + Math.cos(now * 0.00009) * vh * 0.08 + Math.sin(now * 0.00016) * vh * 0.06;
+      // Position the orb higher in the viewport (30% from top instead of 50%)
+      let py = vh * 0.3 + Math.cos(now * 0.00009) * vh * 0.08 + Math.sin(now * 0.00016) * vh * 0.06;
       let parentOpacity = 0.95;
       if (animState === 'dispersing') {
         // Move outward along angle/dist
@@ -302,7 +301,7 @@ const AnimatedOrbHeroBG = ({
           path.setAttribute("opacity", childOpacity);
           childrenGroup.appendChild(path);
           // Particle emission logic (subtle, demo: emit 1 particle per frame from each child orb)
-          emitParticles(x, y, lerpColor(fam[0], fam[1], tcol), 1);
+          emitParticles(childPx, childPy, lerpColor(fam[0], fam[1], tcol), 1);
         }
       }
       // --- Animate and Render Particles ---
