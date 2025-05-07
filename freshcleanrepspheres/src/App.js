@@ -9,6 +9,7 @@ import DeploymentSection from './components/DeploymentSection';
 
 import MoatSection from './components/MoatSection';
 import CTASection from './components/CTASection';
+import IntelligenceSection from './components/IntelligenceSection';
 import Footer from './components/Footer';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <StarryBackground />
       <NavBar />
       <HeroSection />
-      <ProblemSection />
+      <IntelligenceSection />
       <SolutionSection />
       <TimelineSection />
       <DeploymentSection />
