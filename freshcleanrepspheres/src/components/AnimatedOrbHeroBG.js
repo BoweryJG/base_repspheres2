@@ -11,8 +11,8 @@ const AnimatedOrbHeroBG = ({
   const svgRef = useRef(null);
   const parentOrbRef = useRef(null);
   const childrenGroupRef = useRef(null);
-  // particlesGroupRef will be used in the next step
-
+  const particlesGroupRef = useRef(null);
+  const particlesRef = useRef([]); // Particle state
   // --- Animation and Orb Logic ---
   useEffect(() => {
     if (!visible) return;
@@ -103,6 +103,28 @@ const AnimatedOrbHeroBG = ({
     }
     orbStates.push(makeOrbState());
     for (let i = 0; i < childCount; i++) orbStates.push(makeOrbState());
+    // --- Particle System ---
+    function emitParticles(x, y, color, count = 3) {
+      for (let j = 0; j < count; j++) {
+        let h = (Math.random() * 360);
+        let s = 85 + Math.random() * 10;
+        let l = 55 + Math.random() * 20;
+        const particleColor = hslToHex(h, s, l);
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = 0.4 + Math.random() * 0.7;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        particlesRef.current.push({
+          x, y,
+          vx, vy,
+          r: 1.1 + Math.random() * 1.2,
+          life: 0.6,
+          decay: 0.025 + Math.random() * 0.015,
+          color: particleColor,
+          opacity: 0.45
+        });
+      }
+    }
     // --- Animation Loop ---
     function animate() {
       const svg = svgRef.current;
@@ -188,7 +210,35 @@ const AnimatedOrbHeroBG = ({
           path.setAttribute("fill", `url(#${childGradIds[i]})`);
           path.setAttribute("opacity", 0.95);
           childrenGroup.appendChild(path);
+          // Particle emission logic (subtle, demo: emit 1 particle per frame from each child orb)
+          emitParticles(x, y, lerpColor(fam[0], fam[1], tcol), 1);
         }
+      }
+      // --- Animate and Render Particles ---
+      const particlesGroup = particlesGroupRef.current || svg.querySelector('#particles');
+      if (particlesGroup) {
+        // Animate
+        let newParticles = [];
+        particlesGroup.innerHTML = '';
+        for (const p of particlesRef.current) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.98;
+          p.vy *= 0.98;
+          p.life -= p.decay;
+          p.opacity = Math.max(0, p.life);
+          if (p.life > 0) {
+            const circ = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circ.setAttribute("cx", p.x);
+            circ.setAttribute("cy", p.y);
+            circ.setAttribute("r", p.r * p.opacity);
+            circ.setAttribute("fill", p.color);
+            circ.setAttribute("opacity", p.opacity * 0.7);
+            particlesGroup.appendChild(circ);
+            newParticles.push(p);
+          }
+        }
+        particlesRef.current = newParticles;
       }
       animationFrame = requestAnimationFrame(animate);
     }
