@@ -83,27 +83,29 @@ export default function NavBar() {
       mx: { xs: 1, md: 3 },
       mt: { xs: 1, md: 2 },
       width: { xs: 'calc(100% - 8px)', md: 'calc(100% - 48px)' },
-    fontFamily: 'Montserrat, DM Sans, Arial, sans-serif',
-    fontWeight: 700,
-    color: '#fff',
-    marginLeft: 6,
-    letterSpacing: '0.01em',
-    display: 'flex',
-    alignItems: 'center',
-  }}>
-    <span style={{ fontWeight: 800, letterSpacing: '0.09em', marginRight: 2 }}>Rep</span>
-    <span style={{
-      background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      fontWeight: 800,
-      letterSpacing: '0.09em',
-      transition: 'background 0.4s',
+      fontFamily: 'Montserrat, DM Sans, Arial, sans-serif',
+      fontWeight: 700,
+      color: '#fff',
+      marginLeft: 6,
+      letterSpacing: '0.01em',
+      display: 'flex',
+      alignItems: 'center',
     }}>
-      Spheres
-    </span>
-  </span>
-</Box>
+      <Toolbar>
+        <Box sx={{ display: 'flex', alignItems: 'center', fontWeight: 900, fontSize: '1.35rem', letterSpacing: '0.09em', color: '#fff', userSelect: 'none' }}>
+          {orb}
+          <span style={{ fontWeight: 800, letterSpacing: '0.09em', marginRight: 2 }}>Rep</span>
+          <span style={{
+            background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontWeight: 800,
+            letterSpacing: '0.09em',
+            transition: 'background 0.4s',
+          }}>
+            Spheres
+          </span>
+        </Box>
         {isMobile ? (
           <>
             <IconButton edge="end" color="inherit" onClick={() => setDrawerOpen(true)}>
@@ -181,12 +183,12 @@ export default function NavBar() {
           </>
         ) : (
           <Box sx={{
-  display: 'flex',
-  alignItems: 'center',
-  gap: 1.5,
-  justifyContent: 'center',
-  width: '100%',
-}}>
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            justifyContent: 'center',
+            width: '100%',
+          }}>
             {navLinks.map((link) => (
               <Box key={link.label} sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <Button
@@ -263,19 +265,18 @@ export default function NavBar() {
               endIcon={<ArrowForwardIcon sx={{ fontSize: 20 }} />}
               sx={{
                 ...navButtonStyle,
-                ml: 2,
                 background: 'linear-gradient(90deg, #00ffc6 0%, #7B42F6 100%)',
                 color: '#fff',
                 fontWeight: 700,
+                ml: 2,
+                px: 2.8,
+                borderRadius: '24px',
                 fontSize: '1.09rem',
-                borderRadius: '18px',
-                px: 3.2,
-                boxShadow: '0 2px 10px rgba(58,134,255,0.16)',
-                transition: 'all 0.18s',
+                letterSpacing: '0.04em',
+                boxShadow: '0 2px 18px 0 rgba(123,66,246,0.13)',
+                transition: 'all 0.22s',
                 '&:hover': {
-                  background: 'linear-gradient(90deg, #7B42F6 0%, #00ffc6 100%)',
-                  boxShadow: '0 4px 20px rgba(123,66,246,0.22)',
-                  transform: 'scale(1.04)'
+                  background: 'linear-gradient(90deg, #5B3CFF 0%, #00ffc6 100%)',
                 }
               }}
             >
