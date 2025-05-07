@@ -1,13 +1,73 @@
 import React, { useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
 
+import React, { useRef, useEffect, useState } from "react";
 const AnimatedOrbHeroBG = ({
   style = {},
   className = "",
   zIndex = 0,
   visible = true,
   sx = {},
+  disperse = false,
 }) => {
+  // Animation state: 'idle', 'dispersing', 'assembling'
+  const [animState, setAnimState] = useState('idle');
+  const [animProgress, setAnimProgress] = useState(0); // 0 to 1
+  const prevDisperse = useRef(disperse);
+  const disperseDirs = useRef([]); // {angle, dist}
+  const assembleOffsets = useRef([]); // {x, y}
+  const animationDuration = 700; // ms
+
+  // Detect disperse prop change
+  useEffect(() => {
+    if (disperse !== prevDisperse.current) {
+      if (disperse) {
+        // Start dispersing
+        disperseDirs.current = [];
+        for (let i = 0; i < 6; i++) {
+          disperseDirs.current.push({
+            angle: Math.random() * 2 * Math.PI,
+            dist: 180 + Math.random() * 120
+          });
+        }
+        setAnimState('dispersing');
+        setAnimProgress(0);
+      } else {
+        // Start assembling (from below viewport)
+        assembleOffsets.current = [];
+        const vw = typeof window !== 'undefined' ? window.innerWidth : 1920;
+        const vh = typeof window !== 'undefined' ? window.innerHeight : 1080;
+        for (let i = 0; i < 6; i++) {
+          const xoff = (Math.random() - 0.5) * vw * 0.25;
+          const yoff = vh * 0.5 + 80 + Math.random() * vh * 0.25;
+          assembleOffsets.current.push({ x: xoff, y: yoff });
+        }
+        setAnimState('assembling');
+        setAnimProgress(0);
+      }
+      prevDisperse.current = disperse;
+    }
+  }, [disperse]);
+
+  // Animate dispersal/assembly
+  useEffect(() => {
+    if (animState === 'idle') return;
+    let raf;
+    const start = performance.now();
+    function step() {
+      const elapsed = performance.now() - start;
+      let t = Math.min(1, elapsed / animationDuration);
+      setAnimProgress(t);
+      if (t < 1) {
+        raf = requestAnimationFrame(step);
+      } else {
+        if (animState === 'dispersing') setAnimState('idle');
+        if (animState === 'assembling') setAnimState('idle');
+      }
+    }
+    raf = requestAnimationFrame(step);
+    return () => raf && cancelAnimationFrame(raf);
+  }, [animState]);
   const svgRef = useRef(null);
   const parentOrbRef = useRef(null);
   const childrenGroupRef = useRef(null);
@@ -155,35 +215,39 @@ const AnimatedOrbHeroBG = ({
       const parentDy = Math.sin(parentAngle) * parentDrag;
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const px = vw / 2 + Math.sin(now * 0.00011) * vw * 0.09 + Math.cos(now * 0.00007) * vw * 0.07;
-      const py = vh / 2 + Math.cos(now * 0.00009) * vh * 0.08 + Math.sin(now * 0.00016) * vh * 0.06;
+      let px = vw / 2 + Math.sin(now * 0.00011) * vw * 0.09 + Math.cos(now * 0.00007) * vw * 0.07;
+      let py = vh / 2 + Math.cos(now * 0.00009) * vh * 0.08 + Math.sin(now * 0.00016) * vh * 0.06;
+      let parentOpacity = 0.95;
+      if (animState === 'dispersing') {
+        // Move outward along angle/dist
+        const d = disperseDirs.current[0] || {angle: 0, dist: 250};
+        px += Math.cos(d.angle) * d.dist * animProgress;
+        py += Math.sin(d.angle) * d.dist * animProgress;
+        parentOpacity = 0.95 * (1 - animProgress);
+      } else if (animState === 'assembling') {
+        // Start from below viewport
+        const o = assembleOffsets.current[0] || {x: 0, y: vh * 0.8};
+        px += o.x * (1 - animProgress);
+        py += o.y * (1 - animProgress);
+        parentOpacity = 0.95 * animProgress;
+      }
       const parentR = parentRadius;
       const parentAmp = 1;
       const parentPath = generateSuperSmoothBlob(px + parentDx, py + parentDy, parentR, 64, parentMorphT, parentAmp);
-      if (parentOrbRef.current) parentOrbRef.current.setAttribute('d', parentPath);
+      if (parentOrbRef.current) {
+        parentOrbRef.current.setAttribute('d', parentPath);
+        parentOrbRef.current.setAttribute('opacity', parentOpacity);
+      }
       // --- Children ---
       const childrenGroup = childrenGroupRef.current;
       if (childrenGroup) {
         // Clear previous children
         while (childrenGroup.firstChild) childrenGroup.removeChild(childrenGroup.firstChild);
         for (let i = 0; i < childCount; i++) {
-          // Animate dynamic color family for each orb
-          const fam = (() => {
-            const baseHue = (i * 67 + now * 0.018) % 360;
-            const hue2 = (baseHue + 40 + 20 * Math.sin(now * 0.0007 + i)) % 360;
-            const sat = 80 + 10 * Math.sin(now * 0.0005 + i);
-            const light1 = 60 + 10 * Math.cos(now * 0.0004 + i * 2);
-            const light2 = 35 + 15 * Math.sin(now * 0.0006 + i * 3);
-            return [hslToHex(baseHue, sat, light1), hslToHex(hue2, sat, light2)];
-          })();
-          const tcol = 0.5 + 0.5 * Math.sin(now * 0.0005 + i);
-          const grad0 = svg.querySelector(`#c${i}s0`);
-          const grad1 = svg.querySelector(`#c${i}s1`);
-          if (grad0) grad0.setAttribute('stop-color', lerpColor(fam[0], fam[1], tcol));
-          if (grad1) grad1.setAttribute('stop-color', lerpColor(fam[1], fam[0], tcol));
-          // Animate orbit
+          let childPx, childPy, childOpacity = 0.95;
+          // Animate orbit as usual
           const baseAngle = (now * 0.00022 + i * (2 * Math.PI / childCount));
-          const parentR = parentRadius;
+          // Use parentR, px, vw, vh from outer scope
           const minEdge = Math.min(
             px,
             vw - px,
@@ -199,12 +263,44 @@ const AnimatedOrbHeroBG = ({
           const ellipseA = orbitRadius * 1.3 * (0.97 + 0.07 * Math.sin(now * 0.00013 + i));
           const ellipseB = orbitRadius * 1.1 * (0.97 + 0.07 * Math.cos(now * 0.00016 + i * 2));
           const angle = baseAngle + Math.sin(now * 0.00009 + i * 1.7) * 0.22;
-          const x = px + Math.cos(angle) * ellipseA;
-          const y = py + Math.sin(angle) * ellipseB;
+          childPx = px + Math.cos(angle) * ellipseA;
+          childPy = py + Math.sin(angle) * ellipseB;
+          if (animState === 'dispersing') {
+            // Move outward
+            const d = disperseDirs.current[i+1] || {angle: 0, dist: 250};
+            childPx += Math.cos(d.angle) * d.dist * animProgress;
+            childPy += Math.sin(d.angle) * d.dist * animProgress;
+            childOpacity = 0.95 * (1 - animProgress);
+          } else if (animState === 'assembling') {
+            // Start from below
+            const o = assembleOffsets.current[i+1] || {x: 0, y: vh * 0.8};
+            childPx += o.x * (1 - animProgress);
+            childPy += o.y * (1 - animProgress);
+            childOpacity = 0.95 * animProgress;
+          }
+          // Animate dynamic color family for each orb
+          const fam = (() => {
+            const baseHue = (i * 67 + now * 0.018) % 360;
+            const hue2 = (baseHue + 40 + 20 * Math.sin(now * 0.0007 + i)) % 360;
+            const sat = 80 + 10 * Math.sin(now * 0.0005 + i);
+            const light1 = 60 + 10 * Math.cos(now * 0.0004 + i * 2);
+            const light2 = 35 + 15 * Math.sin(now * 0.0006 + i * 3);
+            return [hslToHex(baseHue, sat, light1), hslToHex(hue2, sat, light2)];
+          })();
+          const tcol = 0.5 + 0.5 * Math.sin(now * 0.0005 + i);
+          const grad0 = svg.querySelector(`#c${i}s0`);
+          const grad1 = svg.querySelector(`#c${i}s1`);
+          if (grad0) grad0.setAttribute('stop-color', lerpColor(fam[0], fam[1], tcol));
+          if (grad1) grad1.setAttribute('stop-color', lerpColor(fam[1], fam[0], tcol));
           const cR = childRadius;
           const cAmp = childAmp;
           const morphT = now * 0.0005 + i * 10;
-          const childPath = generateSuperSmoothBlob(x, y, cR, childPoints, morphT, cAmp, i);
+          const childPath = generateSuperSmoothBlob(childPx, childPy, cR, childPoints, morphT, cAmp, i);
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", childPath);
+          path.setAttribute("fill", `url(#${childGradIds[i]})`);
+          path.setAttribute("opacity", childOpacity);
+          childrenGroup.appendChild(path);
           const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path.setAttribute("d", childPath);
           path.setAttribute("fill", `url(#${childGradIds[i]})`);
