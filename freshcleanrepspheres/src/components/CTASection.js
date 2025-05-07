@@ -4,15 +4,14 @@ import { Box, Typography, Button } from '@mui/material';
 export default function CTASection() {
   return (
     <Box id="schedule" sx={{
-      py: { xs: 8, md: 12 },
+      py: { xs: 4, md: 6 },
       px: 0,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'radial-gradient(circle at 60% 70%, rgba(0,255,198,0.07), transparent 70%)',
-      position: 'relative',
-      zIndex: 1
+      backgroundColor: 'transparent',
+      borderTop: '1px solid rgba(255,255,255,0.12)',
     }}>
       <Typography variant="h2" sx={{
         fontWeight: 800,
